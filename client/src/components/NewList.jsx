@@ -23,11 +23,11 @@ function NewList({ cLN, toggleBox2 }) {
       userId: user._id,
       title: listNameValue,
       taskName: taskNameValue,
-      endDate: endDateValue.split("-").reverse().join("."),
+      endDate: endDateValue,
       description: descriptionValue,
       status: false,
     };
-    console.log(new Date(endDateValue).getTime() <= new Date().getTime());
+ 
     if (!listNameValue) {
       throw alert("please enter a title");
     }
@@ -35,7 +35,7 @@ function NewList({ cLN, toggleBox2 }) {
     if (!taskNameValue) {
       throw alert("please enter a task name");
     }
-    if (new Date(endDateValue).getTime() <= new Date().getTime()) {
+    if (new Date(endDateValue).getTime() < new Date().getTime()) {
       throw alert("please enter a valid end date");
     }
 
@@ -89,7 +89,7 @@ function NewList({ cLN, toggleBox2 }) {
               name="endDate"
               id="endDate"
               placeholder="dd/mm/yyyy"
-              min={new Date().toLocaleDateString()}
+              
               ref={endDate}
             />
             <br />

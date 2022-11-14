@@ -3,6 +3,8 @@ import { TasksContext } from "./TasksContext";
 import { TasksTitleContext } from "./TasksTitleContext";
 import { UserContext } from "./userContext";
 import { Button } from "react-bootstrap";
+import { getTasks } from "../service/manageTasks";
+import { useEffect } from "react";
 
 export function UserLists({ toggleBox2 }) {
   const { setListName } = useContext(TasksTitleContext);
@@ -10,21 +12,30 @@ export function UserLists({ toggleBox2 }) {
   const [tempTitle, setTempTitle] = useState();
   const { user } = useContext(UserContext);
 
-  const titleFilter = tempTasks.map((task) => {
-    return task.title;
-  });
+  useEffect(() => {
+    getTasks().then((res) => {
+      setTempTitle([
+        ...res.data.map((task) => {
+          return task.title;
+        }),
+      ]);
+    });
+  }, [tempTasks]);
 
-  const titleArr = [...new Set(titleFilter)].map((task, i) => {
+  const titleArr = [...new Set(tempTitle)].map((task, i) => {
     return (
-      <><div
-        className="listTitle"
-        key={i}
-        onClick={() => {
-          setListName(task);
-        }}
-      >
-        {task} 
-      </div>|</>
+      <>
+        <div
+          className="listTitle"
+          key={i}
+          onClick={() => {
+            setListName(task);
+          }}
+        >
+          {task}
+        </div>
+        |
+      </>
     );
   });
   const displaytitles = () => {
@@ -35,10 +46,11 @@ export function UserLists({ toggleBox2 }) {
         </>
       );
     }
-    if (tempTasks < 1) {
+    if (titleArr < 1) {
       return (
         <>
           <Button onClick={() => toggleBox2()}>New List</Button>
+          <br />
           <hr />
           <div> No Lists </div>
         </>
@@ -48,17 +60,12 @@ export function UserLists({ toggleBox2 }) {
         <>
           <Button onClick={() => toggleBox2()}>New List</Button>
           <br />
+          <br />
           <div id="allTasksBar">|{titleArr}</div>
         </>
       );
     }
   };
 
-  return (
-    <>
-      <h1>My Lists</h1>
-      <br />
-      {displaytitles()}
-    </>
-  );
+  return <>{displaytitles()}</>;
 }

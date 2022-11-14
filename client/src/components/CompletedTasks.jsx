@@ -1,34 +1,34 @@
 import { PopUpEdit } from "./PopUpEdit";
 import { completeTask, deleteTask } from "../service/manageTasks.js";
-import { UserContext } from "./userContext.jsx";
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { TasksTitleContext } from "./TasksTitleContext";
 import { TasksContext } from "./TasksContext";
+import { deleteAllCompleted } from "./../service/manageTasks";
 
-export default function TasksList({ toggleBox }) {
-  const [show, setShow] = useState();
+export default function CompletedTasks() {
   const [selectedData, setSelectedData] = useState();
-  const { user } = useContext(UserContext);
-  const { listName, setListName } = useContext(TasksTitleContext);
+  TasksTitleContext;
   const { tempTasks, setTasks } = useContext(TasksContext);
-  let filtered = tempTasks.filter((task) => task.title == listName);
+  let filtered = tempTasks.filter((task) => task.status == true);
   const completeTaskHandle = (task) => {
     if (!confirm("are you sure you want to complete task?")) return null;
     completeTask(task);
     setSelectedData(null);
   };
 
+  function deleteTasks(filtered) {
+    if (!confirm("Are you sure you want to clear tasks?")) {
+      return null;
+    }
+    deleteAllCompleted(filtered);
+  }
+
   const deleteTaskHandle = (task) => {
     if (!confirm("are you sure you want to delete task?")) return null;
     deleteTask(task);
     setSelectedData(null);
     setTasks(tempTasks);
-
-    if (filtered.length <= 1) {
-      setListName("");
-    }
   };
   function taskPopUp(task, event) {
     if (task) {
@@ -45,7 +45,6 @@ export default function TasksList({ toggleBox }) {
               className="x"
               onClick={() => {
                 setSelectedData(null);
-                setShow(null);
               }}
             >
               X
@@ -82,61 +81,46 @@ export default function TasksList({ toggleBox }) {
     return (
       <tr
         key={i}
-        className={task.status == true ? "Completed" : "Uncompleted"}
+        className="Completed"
         onClick={(event) => {
           setSelectedData(null);
           taskPopUp(task, event);
         }}
       >
-        <td>{i + 1 + "."}</td>
+        <td>{task.title}</td>
         <td>{task.taskName}</td>
         <td>{task.endDate.split("-").reverse().join("/")}</td>
-        <td>{task.description}</td>
-        <td>{task.status == true ? "Completed" : "Uncompleted"}</td>
       </tr>
     );
   });
-  if (!user) {
-    return (
-      <div>
-        <h3>Log in to see lists</h3>
-        <Link to="/login">
-          <Button>Login</Button>
-        </Link>
-        <br />
-        <br />
 
-        <p> Dont have an account yet?</p>
-        <Link to="/register">
-          <Button>Register</Button>
-        </Link>
-      </div>
+  if (filtered.length < 1) {
+    return (
+      <>
+        <h3>Completed Tasks ({filtered.length})</h3>
+        <p>None</p>
+      </>
     );
   }
-  if (listName.length < 1) {
-    return <div>Choose a list or make a new one</div>;
-  }
   return (
-    <>
-      <div id="taskListBox">
-        <h3>{listName}</h3>
-        <Button onClick={() => toggleBox("Add")}>Add Task</Button>
-        {selectedData}
-        <div id="taskList">
-          <table>
-            <thead style={{ fontSize: "2.5rem" }}>
-              <tr>
-                <th>#</th>
-                <th>Task</th>
-                <th>End Date</th>
-                <th>Description</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="task">{taskRows}</tbody>
-          </table>
-        </div>
+    <div className="centerContent">
+      <h3>Completed Tasks ({filtered.length})</h3>
+      {selectedData}
+      <div id="homeList">
+        <table>
+          <thead>
+            <tr>
+              <th>List</th>
+              <th>Task</th>
+              <th>End Date</th>
+            </tr>
+          </thead>
+          <tbody id="homeTask">{taskRows}</tbody>
+        </table>
+      </div>{" "}
+      <div>
+        <Button onClick={() => deleteTasks(filtered)}>Clear</Button>
       </div>
-    </>
+    </div>
   );
 }

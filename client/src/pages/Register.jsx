@@ -27,8 +27,7 @@ export default function Register() {
       password: passwordValue,
       isAdmin: false,
     };
-    registerUser(newUser);
-    Navigate("/login");
+    registerUser(newUser, Navigate);
   }
   return (
     <div className="centerContent">

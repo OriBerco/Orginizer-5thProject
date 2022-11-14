@@ -28,15 +28,24 @@ button.btn {
   border: #299459fc;
   transform: scale(1.2);
   margin: 5px;
+  width: 120px;
 }
 button.btn:hover {
   background-color: #299459fc;
 }
 
 .App {
-  font-size: 1.6em;
+  font-size: 2em;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
+  color: rgb(33, 20, 20);
+}
+#contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 .content {
   width: 100%;
@@ -48,13 +57,12 @@ button.btn:hover {
 .navbar .container {
   background-color: rgba(43, 174, 102, 0.99);
   border-radius: 10px;
-  width: 100%;
   max-width: 100%;
   z-index: 4;
 }
 .navbar {
   height: 80px;
-  z-index: 3;
+  z-index: 2;
   margin-bottom: 50px;
 }
 .navbar a {
@@ -62,8 +70,6 @@ button.btn:hover {
   transition: all 0.2s ease;
   font-size: 1.5em;
   padding: 10px;
-
-  height: 100%;
   display: block;
 }
 .notUser {
@@ -98,7 +104,7 @@ a.nav-link:active {
   font-size: 1.7rem;
   padding: 5px;
   width: 83vw;
-  background-color: rgba(167, 165, 162, 0.66);
+  background-color: rgba(93, 118, 107, 0.66);
 }
 #taskList thead tr :nth-child(1) {
   display: none;
@@ -111,6 +117,7 @@ a.nav-link:active {
   font-size: 0.9em;
   width: 100vw;
   margin: auto;
+  z-index: 3;
 }
 #task td:nth-child(1) {
   display: none;
@@ -139,9 +146,8 @@ a.nav-link:active {
 }
 #taskAdd {
   position: relative;
-
   background-color: #fcf6f5ff;
-  width: 60vw;
+  width: 90vw;
   height: 70%;
   border-radius: 20px;
   animation-name: change-position;
@@ -149,10 +155,10 @@ a.nav-link:active {
 }
 #taskAdd .exit {
   cursor: pointer;
-    position: absolute;
+  position: absolute;
   right: 20px;
   top: 10px;
-
+  font-size: 3rem;
 }
 
 #taskListBox h3 {
@@ -182,7 +188,7 @@ a.nav-link:active {
 
 .listTitle:hover {
   cursor: pointer;
-  text-shadow: 1px 1px 2px ;
+  text-shadow: 1px 1px 2px;
 }
 button:hover {
   cursor: pointer;
@@ -215,7 +221,8 @@ button:hover {
 .Completed {
   color: rgb(106, 172, 39);
 }
-.Uncompleted {
+.overdue {
+  color: red;
 }
 
 #editPopUp {
@@ -229,7 +236,7 @@ button:hover {
     rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
     rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
   padding: 10px;
-  
+  color: rgb(33, 20, 20);
 }
 #editPopUp form {
   width: 70%;
@@ -243,7 +250,8 @@ button:hover {
 }
 #editPopUp img {
   width: 25%;
-  max-width: 200px;padding-top: 10px;
+  max-width: 200px;
+  padding-top: 10px;
 }
 .x {
   position: absolute;
@@ -252,7 +260,7 @@ button:hover {
   font-size: 1.5em;
   cursor: pointer;
 }
-#editNoMobile{
+#editNoMobile {
   display: none;
 }
 #registerArea {
@@ -263,10 +271,11 @@ button:hover {
 }
 #registerArea h2 {
   text-align: center;
-  background-color: rgb(165, 165, 165);
+  background-color: rgba(108, 138, 125, 0.66);
   border-radius: 4px;
-  color: rgb(0, 0, 0);
+  color: rgb(33, 20, 20);
   padding: 8px;
+  margin: 10px;
 }
 #loginArea {
   border-radius: 5px 60px 5px 5px;
@@ -276,9 +285,9 @@ button:hover {
 }
 #loginArea h2 {
   text-align: center;
-  background-color: rgb(165, 165, 165);
+  background-color: rgba(93, 118, 107, 0.66);
   border-radius: 4px;
-  color: rgb(0, 0, 0);
+  color: rgb(33, 20, 20);
   padding: 8px;
 }
 form label {
@@ -289,6 +298,20 @@ form label {
 }
 .footer {
   display: none;
+}
+#homeTopLists {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-bottom: 30px;
+}
+#homeList table {
+  text-align: center;
+  width: 100%;
+}
+#homeList table thead tr {
+  text-align: center;
+  width: 100%;
+  background-color: rgba(82, 112, 75, 0.24);
 }
 @media all and (min-width: 800px) {
   @keyframes slide-in {
@@ -312,9 +335,17 @@ form label {
       transform: translate(850px, 650px) rotate(180deg) scale(0);
     }
   }
+  .App {
+    font-size: 1.6em;
+    flex-direction: column;
+    height: 100vh;
+  }
+  #contact {
+    flex-direction: row-reverse;
+  }
   #taskAdd {
     width: 50vw;
-    height: 70vh;
+    height: 90vh;
     z-index: 2;
   }
   #taskAdd .exit {
@@ -334,7 +365,7 @@ form label {
     display: inline-block;
     position: absolute;
     pointer-events: visible;
-    transform: translate(38vw, 70vh) rotate(-30deg) scale(1.5);
+    transform: translate(40vw, 75vh) rotate(-30deg) scale(1.5);
     transition: all 1s ease;
     animation-name: slide-in;
     animation-duration: 3s;
@@ -369,15 +400,12 @@ form label {
     color: #212529;
   }
   .navbar .container {
-    width: 80%;
     background-color: rgba(43, 174, 102, 0.99);
+    width: 90%;
   }
   #taskList {
     font-size: 1.7rem;
     white-space: nowrap;
-  }
-  #task tr:hover td {
-    font-size: 1em;
   }
   #taskList thead tr :nth-child(1) {
     display: contents;
@@ -410,7 +438,32 @@ form label {
     display: flex;
     gap: 80px;
   }
-  #editNoMobile{
+  #editNoMobile {
     display: flex;
+  }
+  #homeList {
+    background-color: #38d27d28;
+    width: 60%;
+    border-radius: 10px;
+    padding: 10px;
+    color: rgb(33, 20, 20);
+    /*  margin: 10px; */
+  }
+
+  #homeTopLists {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 30px;
+  }
+  #homeBottomLists {
+    display: grid;
+    grid-template-columns: 1fr 10fr 1fr;
+  }
+  #homeTask tr:hover {
+    background-color: rgba(43, 174, 102, 0.5);
+    box-shadow: rgba(0, 0, 0, 0.524) 0px 0.0625em 0.0625em,
+      rgba(0, 0, 0, 0.25) 0px 0.2em 0.5em,
+      rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    cursor: pointer;
   }
 }

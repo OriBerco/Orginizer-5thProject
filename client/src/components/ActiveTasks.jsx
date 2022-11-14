@@ -7,13 +7,14 @@ import { Button } from "react-bootstrap";
 import { TasksTitleContext } from "./TasksTitleContext";
 import { TasksContext } from "./TasksContext";
 
-export default function TasksList({ toggleBox }) {
-  const [show, setShow] = useState();
+export default function OverdueTasks() {
+  const { setListName } = useContext(TasksTitleContext);
   const [selectedData, setSelectedData] = useState();
-  const { user } = useContext(UserContext);
-  const { listName, setListName } = useContext(TasksTitleContext);
+  TasksTitleContext;
   const { tempTasks, setTasks } = useContext(TasksContext);
-  let filtered = tempTasks.filter((task) => task.title == listName);
+  let filtered = tempTasks.filter(
+    (task) => new Date(task.endDate) > new Date() && task.status == false
+  );
   const completeTaskHandle = (task) => {
     if (!confirm("are you sure you want to complete task?")) return null;
     completeTask(task);
@@ -25,10 +26,6 @@ export default function TasksList({ toggleBox }) {
     deleteTask(task);
     setSelectedData(null);
     setTasks(tempTasks);
-
-    if (filtered.length <= 1) {
-      setListName("");
-    }
   };
   function taskPopUp(task, event) {
     if (task) {
@@ -45,7 +42,6 @@ export default function TasksList({ toggleBox }) {
               className="x"
               onClick={() => {
                 setSelectedData(null);
-                setShow(null);
               }}
             >
               X
@@ -78,65 +74,55 @@ export default function TasksList({ toggleBox }) {
     return null;
   }
 
-  let taskRows = filtered.map((task, i) => {
-    return (
-      <tr
-        key={i}
-        className={task.status == true ? "Completed" : "Uncompleted"}
-        onClick={(event) => {
-          setSelectedData(null);
-          taskPopUp(task, event);
-        }}
-      >
-        <td>{i + 1 + "."}</td>
-        <td>{task.taskName}</td>
-        <td>{task.endDate.split("-").reverse().join("/")}</td>
-        <td>{task.description}</td>
-        <td>{task.status == true ? "Completed" : "Uncompleted"}</td>
-      </tr>
-    );
-  });
-  if (!user) {
-    return (
-      <div>
-        <h3>Log in to see lists</h3>
-        <Link to="/login">
-          <Button>Login</Button>
-        </Link>
-        <br />
-        <br />
+  let taskRows = filtered
+    .sort((a, b) => {
+      return a.endDate < b.endDate ? -1 : 1;
+    })
+    .map((task, i) => {
+      return (
+        <tr
+          key={i}
+          className={task.status == true ? "Completed" : "Uncompleted"}
+          onClick={(event) => {
+            setSelectedData(null);
+            taskPopUp(task, event);
+          }}
+        >
+          <td>{task.title}</td>
+          <td>{task.taskName}</td>
+          <td>{task.endDate.split("-").reverse().join("/")}</td>
+        </tr>
+      );
+    });
 
-        <p> Dont have an account yet?</p>
-        <Link to="/register">
-          <Button>Register</Button>
-        </Link>
-      </div>
+  if (filtered.length < 1) {
+    return (
+      <>
+        <h3>Active Tasks ({filtered.length})</h3> <p>None</p>
+      </>
     );
-  }
-  if (listName.length < 1) {
-    return <div>Choose a list or make a new one</div>;
   }
   return (
-    <>
-      <div id="taskListBox">
-        <h3>{listName}</h3>
-        <Button onClick={() => toggleBox("Add")}>Add Task</Button>
-        {selectedData}
-        <div id="taskList">
-          <table>
-            <thead style={{ fontSize: "2.5rem" }}>
-              <tr>
-                <th>#</th>
-                <th>Task</th>
-                <th>End Date</th>
-                <th>Description</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="task">{taskRows}</tbody>
-          </table>
-        </div>
+    <div className="centerContent">
+      <h3>Active Tasks ({filtered.length})</h3>
+      {selectedData}
+      <div id="homeList">
+        <table>
+          <thead>
+            <tr>
+              <th>List</th>
+              <th>Task</th>
+              <th>End Date</th>
+            </tr>
+          </thead>
+          <tbody id="homeTask">{taskRows}</tbody>
+        </table>
+      </div>{" "}
+      <div>
+        <Link to="/lists">
+          <Button onClick={() => setListName("")}>All Tasks</Button>
+        </Link>
       </div>
-    </>
+    </div>
   );
 }

@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
@@ -7,16 +6,16 @@ import { getUserDetails } from "./src/service/manageUsers";
 import { getTasks } from "./src/service/manageTasks";
 import { TasksContext } from "./src/components/TasksContext";
 import { TasksTitleContext } from "./src/components/TasksTitleContext";
-import Home from './src/pages/Home';
-import About from './src/pages/About';
-import Login from './src/pages/Login';
-import Register from './src/pages/Register';
-import Contact from './src/pages/Contact';
-import TaskZone from './src/pages/TaskZone';
-import UserZone from './src/pages/UserZone';
-import AdminZone from './src/pages/AdminZone';
+import Home from "./src/pages/Home";
+import About from "./src/pages/About";
+import Login from "./src/pages/Login";
+import Register from "./src/pages/Register";
+import Contact from "./src/pages/Contact";
+import TaskZone from "./src/pages/TaskZone";
+import UserZone from "./src/pages/UserZone";
+import AdminZone from "./src/pages/AdminZone";
 import NavigationBar from "./src/components/NavigationBar";
-import  Footer  from './src/components/Footer';
+import Footer from "./src/components/Footer";
 
 function App() {
   const [user, setUser] = useState();
@@ -65,11 +64,7 @@ function App() {
               <NavigationBar />
               <div className="content container">
                 <div id="imgBgcDiv">
-                  <img
-                    className="bgImg"
-                    src=".\to-do-list.png"
-                    alt="logo"
-                  />
+                  <img className="bgImg" src=".\to-do-list.png" alt="logo" />
                 </div>
                 <Routes>
                   <Route path="/" exact element={<Home />} />
@@ -82,8 +77,11 @@ function App() {
                   <Route path="/userzone" element={<UserZone />} />
                 </Routes>
               </div>
-<Footer    />
+              <Footer />
             </div>
+            <br />
+            <br />
+            <br />
           </BrowserRouter>
         </TasksTitleContext.Provider>
       </TasksContext.Provider>

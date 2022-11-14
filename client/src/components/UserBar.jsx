@@ -41,7 +41,7 @@ export default function UserBar() {
               All Users
             </NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item >
+            <NavDropdown.Item>
               <LogOutButton />
             </NavDropdown.Item>
           </NavDropdown>

@@ -20,12 +20,12 @@ export default function AddTask({ cN, toggleBox }) {
       userId: user._id,
       title: listName,
       taskName: taskNameValue,
-      endDate: endDateValue.split("-").reverse().join("."),
+      endDate: endDateValue,
       description: descriptionValue,
       status: false,
     };
 
-    if (new Date(endDateValue).getTime() < new Date().getTime()) {
+    if (new Date(endDateValue) < new Date()) {
       throw alert("please enter a valid end date");
     }
     if (!taskNameValue) {
@@ -69,7 +69,6 @@ export default function AddTask({ cN, toggleBox }) {
               name="endDate"
               id="endDate"
               placeholder="dd/mm/yyyy"
-              min={new Date().toLocaleDateString()}
               ref={endDate}
             />
             <br />
@@ -82,6 +81,7 @@ export default function AddTask({ cN, toggleBox }) {
               placeholder="Enter Description"
               ref={description}
             />
+            <br />
             <br />
             <Button type="submit">Create Task</Button>
           </form>
