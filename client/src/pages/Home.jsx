@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { UserContext } from "../components/userContext";
 
 export default function Home() {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   function greet() {
     return user ? (

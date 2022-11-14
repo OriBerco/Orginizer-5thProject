@@ -67,7 +67,7 @@ function App() {
                 <div id="imgBgcDiv">
                   <img
                     className="bgImg"
-                    src="public\to-do-list.png"
+                    src=".\to-do-list.png"
                     alt="logo"
                   />
                 </div>

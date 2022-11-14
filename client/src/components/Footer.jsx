@@ -16,7 +16,7 @@ import React from "react";
                     <i className="fa-brands fa-linkedin"></i>
                   </a>
                 </div>
-                <h6>&copy; Ori Berco {new Date().getFullYear()}</h6>
+                <h6>Ori Berco &copy;  {new Date().getFullYear()}</h6>
               </div>);
     }
   
