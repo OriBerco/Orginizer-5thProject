@@ -45,7 +45,7 @@ export default function Contact() {
         </div>
         <div>
           <h5>Phone: +972-50-323-2255</h5>
-          <h5>Address: Blag Blig Blag Luksinton Rd</h5>
+          <h5>Address: Blag Blig Luksinton Rd</h5>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d221064.61359299612!2d-89.88256344999999!3d30.032996449999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8620a454b2118265%3A0xdb065be85e22d3b4!2z16DXmdeVINeQ15XXqNec15nXoNehLCDXnNeV15DXmdeW15nXkNeg15QsINeQ16jXpteV16og15TXkdeo15nXqg!5e0!3m2!1siw!2sil!4v1656685682582!5m2!1siw!2sil"
             width="350"

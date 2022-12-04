@@ -1,112 +1,82 @@
 import { PopUpEdit } from "./PopUpEdit";
-import { completeTask, deleteTask } from "../service/manageTasks.js";
+import { deleteAllCompleted, getTasks } from "../service/manageTasks.js";
 import { useContext, useState } from "react";
 import { Button } from "react-bootstrap";
 import { TasksTitleContext } from "./TasksTitleContext";
 import { TasksContext } from "./TasksContext";
-import { deleteAllCompleted } from "./../service/manageTasks";
+import { usePopper } from "react-popper";
+import { ToRenderContext } from "./ToRenderContext";
 
 export default function CompletedTasks() {
+  const { setToRender } = useContext(ToRenderContext);
   const [selectedData, setSelectedData] = useState();
   TasksTitleContext;
   const { tempTasks, setTasks } = useContext(TasksContext);
+  const [referenceElement, setReferenceElement] = useState(null);
+  const [popperElement, setPopperElement] = useState(null);
+  const { styles, attributes } = usePopper(referenceElement, popperElement, {
+    placement: "left-end",
+  });
   let filtered = tempTasks.filter((task) => task.status == true);
-  const completeTaskHandle = (task) => {
-    if (!confirm("are you sure you want to complete task?")) return null;
-    completeTask(task);
-    setSelectedData(null);
-  };
-
-  function deleteTasks(filtered) {
+  function showPop(task) {
+    if (selectedData) setSelectedData(null);
+    setSelectedData(
+      <PopUpEdit
+        setSelectedData={setSelectedData}
+        task={task}
+        filtered={filtered}
+      />
+    );
+  }
+  function deleteTasks() {
     if (!confirm("Are you sure you want to clear tasks?")) {
       return null;
     }
-    deleteAllCompleted(filtered);
+    deleteAllCompleted(filtered).then((resp) => {
+      resp
+        ? getTasks().then((res) => {
+            setTasks([...res.data]);
+          })
+        : null;
+    });
+    setToRender((prev) => (prev == 1 ? 2 : 1));
   }
 
-  const deleteTaskHandle = (task) => {
-    if (!confirm("are you sure you want to delete task?")) return null;
-    deleteTask(task);
-    setSelectedData(null);
-    setTasks(tempTasks);
-  };
-  function taskPopUp(task, event) {
-    if (task) {
-      setSelectedData(
-        <div
-          id="editPopUp"
-          style={{
-            top: event.clientY - 150,
-            left: event.clientX - 200,
+  let taskRows = filtered
+    .sort((a, b) => {
+      return a.endDate < b.endDate ? -1 : 1;
+    })
+    .map((task, i) => {
+      return (
+        <tr
+          key={i}
+          className={task.status == true ? "Completed" : "Uncompleted"}
+          onClick={() => {
+            setSelectedData(null);
+            showPop(task);
           }}
         >
-          <div>
-            <div
-              className="x"
-              onClick={() => {
-                setSelectedData(null);
-              }}
-            >
-              X
-            </div>
-            <PopUpEdit setSelectedData={setSelectedData} t={task} e={event} />
-            <br />
-          </div>
-          <div className="centerContent" style={{ flexDirection: "row" }}>
-            <div></div>
-            <div
-              onClick={() => {
-                deleteTaskHandle(task._id);
-              }}
-            >
-              Delete
-              <img src=".\delete.png" alt="garbage" />
-            </div>
-            <div
-              onClick={() => {
-                completeTaskHandle(task);
-              }}
-            >
-              Complete
-              <img src=".\checklist.png" alt="check" />
-            </div>
-          </div>
-        </div>
+          <td>{task.title}</td>
+          <td>{task.taskName}</td>
+          <td>{task.endDate.split("-").reverse().join("/")}</td>
+        </tr>
       );
-    }
-    return null;
-  }
-
-  let taskRows = filtered.map((task, i) => {
-    return (
-      <tr
-        key={i}
-        className="Completed"
-        onClick={(event) => {
-          setSelectedData(null);
-          taskPopUp(task, event);
-        }}
-      >
-        <td>{task.title}</td>
-        <td>{task.taskName}</td>
-        <td>{task.endDate.split("-").reverse().join("/")}</td>
-      </tr>
-    );
-  });
+    });
 
   if (filtered.length < 1) {
     return (
       <>
-        <h3>Completed Tasks ({filtered.length})</h3>
-        <p>None</p>
+        <h3>Active Tasks ({filtered.length})</h3> <p>None</p>
       </>
     );
   }
   return (
-    <div className="centerContent">
+    <div className="centerContent" ref={setReferenceElement}>
       <h3>Completed Tasks ({filtered.length})</h3>
-      {selectedData}
-      <div id="homeList">
+      <div ref={setPopperElement} style={styles.popper} {...attributes.popper}>
+        {selectedData}
+      </div>
+      <div id="homeList" className="table-responsive">
         <table>
           <thead>
             <tr>
@@ -119,7 +89,7 @@ export default function CompletedTasks() {
         </table>
       </div>{" "}
       <div>
-        <Button onClick={() => deleteTasks(filtered)}>Clear</Button>
+        <Button onClick={() => deleteTasks()}>Clear</Button>
       </div>
     </div>
   );

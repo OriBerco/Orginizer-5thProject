@@ -24,7 +24,7 @@ export function UserLists({ toggleBox2 }) {
 
   const titleArr = [...new Set(tempTitle)].map((task, i) => {
     return (
-      <>
+      <div className="centerContent" key={i}>
         <div
           className="listTitle"
           key={i}
@@ -34,8 +34,8 @@ export function UserLists({ toggleBox2 }) {
         >
           {task}
         </div>
-        |
-      </>
+        <span> |</span>
+      </div>
     );
   });
   const displaytitles = () => {

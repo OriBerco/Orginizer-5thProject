@@ -41,10 +41,8 @@ async function deleteTask(taskId) {
   }
 }
 async function deleteTasks(task) {
-  console.log(task);
   try {
     const tasks = await taskModel.deleteMany(task);
-    console.log(tasks);
     return tasks;
   } catch {
     return null;
@@ -60,7 +58,6 @@ async function getTasksByUserId(id) {
     return null;
   }
 }
-console.log(new Date());
 module.exports = {
   createTask,
   getTaskById,

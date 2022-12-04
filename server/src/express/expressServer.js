@@ -1,11 +1,11 @@
 const express = require("express");
 const server = express();
 const cors = require("cors");
-const cookieParser = require("cookie-parser");
+
 
 server.use(express.json());
 server.use(cors());
-server.use(cookieParser());
+
 const registerUser = require("./handlers/registerUser");
 const signinUser = require("./handlers/signinUser");
 const authenticateUser = require("./middlewares/authenticateUser");

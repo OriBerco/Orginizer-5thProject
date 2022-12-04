@@ -1,16 +1,18 @@
 import { useContext, useRef } from "react";
 import { Button } from "react-bootstrap";
-import { createNewTask } from "../service/manageTasks";
+import { createNewTask, getTasks } from "../service/manageTasks";
 import { UserContext } from "./userContext";
 import { TasksTitleContext } from "./TasksTitleContext";
+import { TasksContext } from "./TasksContext";
 
 export default function AddTask({ cN, toggleBox }) {
   const { user } = useContext(UserContext);
   const { listName } = useContext(TasksTitleContext);
+  const { setTasks } = useContext(TasksContext);
   let taskName = useRef("");
   let endDate = useRef("");
   let description = useRef("");
-  function onAdd(event) {
+  async function onAdd(event) {
     event.preventDefault();
     let taskNameValue = taskName.current.value;
     let endDateValue = endDate.current.value;
@@ -31,7 +33,17 @@ export default function AddTask({ cN, toggleBox }) {
     if (!taskNameValue) {
       throw alert("please enter a task name");
     }
-    createNewTask(newTask);
+    createNewTask(newTask).then((resp) => {
+      
+      resp
+        ? getTasks().then((res) => {
+           
+            setTasks([...res.data]);
+          })
+        : console.log("no");
+      {
+      }
+    });
     toggleBox();
     event.target.reset();
   }

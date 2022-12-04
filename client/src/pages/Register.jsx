@@ -1,9 +1,13 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../service/manageUsers";
 
 export default function Register() {
+  const [fNameError, setFNameError] = useState("");
+  const [lNameError, setLNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const Navigate = useNavigate();
   const firstName = useRef();
   const lastName = useRef();
@@ -27,7 +31,28 @@ export default function Register() {
       password: passwordValue,
       isAdmin: false,
     };
-    registerUser(newUser, Navigate);
+    registerUser(newUser, Navigate).catch((err) => {
+      if (err.response.data.includes("Email")) {
+        setEmailError(err.response.data);
+      } else {
+        setEmailError("");
+      }
+      if (err.response.data.includes("Password")) {
+        setPasswordError(err.response.data);
+      } else {
+        setPasswordError("");
+      }
+      if (err.response.data.includes("First")) {
+        setFNameError(err.response.data);
+      } else {
+        setFNameError("");
+      }
+      if (err.response.data.includes("Last")) {
+        setLNameError(err.response.data);
+      } else {
+        setLNameError("");
+      }
+    });
   }
   return (
     <div className="centerContent">
@@ -36,21 +61,61 @@ export default function Register() {
         <label htmlFor="firstName">First Name:</label>
         <br />
 
-        <input type="text" id="firstName" name="firstName" ref={firstName} />
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          ref={firstName}
+          onChange={() => setFNameError("")}
+        />
         <br />
+        <div className="text-danger" id="errDiv">
+          {fNameError}
+        </div>
         <label htmlFor="lastName">Last Name:</label>
         <br />
 
-        <input type="text" id="lastName" name="lastName" ref={lastName} />
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          ref={lastName}
+          onChange={() => setLNameError("")}
+        />
+
         <br />
+        <div className="text-danger" id="errDiv">
+          {lNameError}
+        </div>
         <label htmlFor="email">Email:</label>
         <br />
-        <input type="email" name="email" id="email" ref={email} />
+        <input
+          type="email"
+          name="email"
+          id="email"
+          ref={email}
+          onChange={() => setEmailError("")}
+        />
+
         <br />
+        <div className="text-danger" id="errDiv">
+          {emailError}
+        </div>
         <label htmlFor="password">Password:</label>
         <br />
-        <input type="password" name="password" id="password" ref={password} />
+
+        <input
+          type="password"
+          name="password"
+          id="password"
+          ref={password}
+          onChange={() => setPasswordError("")}
+        />
+
         <br />
+        <div className="text-danger" id="errDiv">
+          {passwordError}
+        </div>
         <br />
         <div>
           <Button type="submit">Register</Button>

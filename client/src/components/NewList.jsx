@@ -1,12 +1,14 @@
 import { useContext, useRef } from "react";
 import { Button } from "react-bootstrap";
-import { createNewTask } from "../service/manageTasks";
+import { createNewTask, getTasks } from "../service/manageTasks";
 import { UserContext } from "./userContext";
 import { TasksTitleContext } from "./TasksTitleContext";
+import { TasksContext } from "./TasksContext";
 
 function NewList({ cLN, toggleBox2 }) {
   const { user } = useContext(UserContext);
   const { setListName } = useContext(TasksTitleContext);
+  const { setTasks } = useContext(TasksContext);
   let taskName = useRef("");
   let endDate = useRef("");
   let description = useRef("");
@@ -27,7 +29,7 @@ function NewList({ cLN, toggleBox2 }) {
       description: descriptionValue,
       status: false,
     };
- 
+
     if (!listNameValue) {
       throw alert("please enter a title");
     }
@@ -42,6 +44,7 @@ function NewList({ cLN, toggleBox2 }) {
     createNewTask(newTask);
     toggleBox2();
     setListName(listNameValue);
+    getTasks().then((res) => setTasks(res.data));
     event.target.reset();
   }
 
@@ -89,7 +92,6 @@ function NewList({ cLN, toggleBox2 }) {
               name="endDate"
               id="endDate"
               placeholder="dd/mm/yyyy"
-              
               ref={endDate}
             />
             <br />

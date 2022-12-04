@@ -2,7 +2,6 @@ const operations = require("../../mongoose/taskOperations");
 
 async function deleteTasks(req, res) {
   const task = req.body;
-  console.log(task);
 
   if (task == null) return res.status(400).json("Please provide a Task");
 

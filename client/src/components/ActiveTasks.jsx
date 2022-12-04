@@ -1,78 +1,41 @@
 import { PopUpEdit } from "./PopUpEdit";
-import { completeTask, deleteTask } from "../service/manageTasks.js";
-import { UserContext } from "./userContext.jsx";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { TasksTitleContext } from "./TasksTitleContext";
 import { TasksContext } from "./TasksContext";
+import { usePopper } from "react-popper";
 
-export default function OverdueTasks() {
+export default function ActiveTasks() {
   const { setListName } = useContext(TasksTitleContext);
   const [selectedData, setSelectedData] = useState();
+  const [searchData, setSearchData] = useState("");
   TasksTitleContext;
-  const { tempTasks, setTasks } = useContext(TasksContext);
-  let filtered = tempTasks.filter(
-    (task) => new Date(task.endDate) > new Date() && task.status == false
-  );
-  const completeTaskHandle = (task) => {
-    if (!confirm("are you sure you want to complete task?")) return null;
-    completeTask(task);
-    setSelectedData(null);
-  };
+  const { tempTasks } = useContext(TasksContext);
+  const [referenceElement, setReferenceElement] = useState(null);
+  const [popperElement, setPopperElement] = useState(null);
+  const { styles, attributes } = usePopper(referenceElement, popperElement, {
+    placement: "auto-end",
+  });
 
-  const deleteTaskHandle = (task) => {
-    if (!confirm("are you sure you want to delete task?")) return null;
-    deleteTask(task);
-    setSelectedData(null);
-    setTasks(tempTasks);
-  };
-  function taskPopUp(task, event) {
-    if (task) {
-      setSelectedData(
-        <div
-          id="editPopUp"
-          style={{
-            top: event.clientY - 150,
-            left: event.clientX - 200,
-          }}
-        >
-          <div>
-            <div
-              className="x"
-              onClick={() => {
-                setSelectedData(null);
-              }}
-            >
-              X
-            </div>
-            <PopUpEdit setSelectedData={setSelectedData} t={task} e={event} />
-            <br />
-          </div>
-          <div className="centerContent" style={{ flexDirection: "row" }}>
-            <div></div>
-            <div
-              onClick={() => {
-                deleteTaskHandle(task._id);
-              }}
-            >
-              Delete
-              <img src=".\delete.png" alt="garbage" />
-            </div>
-            <div
-              onClick={() => {
-                completeTaskHandle(task);
-              }}
-            >
-              Complete
-              <img src=".\checklist.png" alt="check" />
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return null;
+  function showPop(task, event) {
+    if (selectedData) setSelectedData(null);
+
+    setSelectedData(
+      <PopUpEdit
+        setSelectedData={setSelectedData}
+        task={task}
+        event={event}
+        filtered={filtered}
+      />
+    );
   }
+  let filtered = tempTasks.filter(
+    (task) =>
+      new Date(task.endDate) > new Date() &&
+      task.status == false &&
+      task.taskName.includes(searchData)
+  );
 
   let taskRows = filtered
     .sort((a, b) => {
@@ -85,7 +48,7 @@ export default function OverdueTasks() {
           className={task.status == true ? "Completed" : "Uncompleted"}
           onClick={(event) => {
             setSelectedData(null);
-            taskPopUp(task, event);
+            showPop(task, event);
           }}
         >
           <td>{task.title}</td>
@@ -94,35 +57,53 @@ export default function OverdueTasks() {
         </tr>
       );
     });
-
-  if (filtered.length < 1) {
+  function activeTasksDisplay() {
+    if (filtered.length < 1) {
+      return (
+        <>
+          <p>None</p>
+        </>
+      );
+    }
     return (
       <>
-        <h3>Active Tasks ({filtered.length})</h3> <p>None</p>
+        {" "}
+        <div
+          ref={setPopperElement}
+          style={styles.popper}
+          {...attributes.popper}
+        >
+          {selectedData}
+        </div>
+        <div id="homeList" className="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>List</th>
+                <th>Task</th>
+                <th>End Date</th>
+              </tr>
+            </thead>
+            <tbody id="homeTask">{taskRows}</tbody>
+          </table>
+        </div>{" "}
       </>
     );
   }
   return (
-    <div className="centerContent">
+    <div className="centerContent" ref={setReferenceElement}>
       <h3>Active Tasks ({filtered.length})</h3>
-      {selectedData}
-      <div id="homeList">
-        <table>
-          <thead>
-            <tr>
-              <th>List</th>
-              <th>Task</th>
-              <th>End Date</th>
-            </tr>
-          </thead>
-          <tbody id="homeTask">{taskRows}</tbody>
-        </table>
-      </div>{" "}
+      <input
+        type="text"
+        placeholder="Search"
+        onChange={(event) => setSearchData(event.target.value)}
+      />
+      {activeTasksDisplay()}
       <div>
         <Link to="/lists">
           <Button onClick={() => setListName("")}>All Tasks</Button>
         </Link>
-      </div>
+      </div><br /><br />
     </div>
   );
 }

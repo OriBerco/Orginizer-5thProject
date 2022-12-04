@@ -1,0 +1,69 @@
+button.btn {
+  background-color: #2bae66fc;
+  border: #299459fc;
+  transform: scale(1.2);
+  margin: 5px;
+  width: 120px;
+}
+button.btn:hover {
+  background-color: #299459fc;
+}
+
+.App {
+  font-size: 2em;
+  flex-direction: column;
+  height: 100%;
+  color: rgb(33, 20, 20);
+}
+
+
+.content {
+  width: 100%;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+.visible {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.centerContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.Completed {
+  color: rgb(106, 172, 39);
+}
+.overdue {
+  color: red;
+}
+
+form label {
+  display: none;
+}
+.bgImg {
+  display: none;
+}
+
+@media all and (min-width: 1000px) {
+  .App {
+    font-size: 1.6em;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  form label {
+    display: contents;
+  }
+}
+

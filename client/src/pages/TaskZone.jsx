@@ -7,7 +7,7 @@ import NewList from "../components/NewList";
 export default function TaskZone() {
   const [cN, setCn] = useState("hidden");
   const [cLN, setCLN] = useState("hidden");
-  
+
   function toggleBox() {
     if (cN == "hidden") setCn("visible");
     else setCn("hidden");

@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import { updateUserDetails } from "../service/manageUsers";
 
 export default function UserZone() {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const firstName = useRef();
   const lastName = useRef();
   const email = useRef();
@@ -43,7 +43,7 @@ export default function UserZone() {
       <div className="centerContent">
         <form
           onSubmit={(e) => onUpdate(e)}
-          id="registerArea" /* className="centerContent" */
+          id="registerArea"
         >
           <h2>Update Details</h2>
           <label htmlFor="">First Name</label>

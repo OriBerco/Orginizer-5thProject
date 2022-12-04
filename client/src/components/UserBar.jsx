@@ -12,7 +12,7 @@ export default function UserBar() {
       return (
         <div className="notUser">
           <Nav.Link as={Link} to="/login" eventKey="5">
-            Login
+            Signin
           </Nav.Link>
           <Nav.Link as={Link} to="/register" eventKey="6">
             Register
@@ -35,7 +35,7 @@ export default function UserBar() {
             id="basic-nav-dropdown"
           >
             <NavDropdown.Item as={Link} to="/userzone">
-              User Zone
+              Profile
             </NavDropdown.Item>
             <NavDropdown.Item as={Link} to="/adminzone">
               All Users

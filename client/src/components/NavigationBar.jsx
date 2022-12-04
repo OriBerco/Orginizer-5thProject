@@ -14,10 +14,7 @@ export default function NavigationBar() {
             style={{ width: "40px" }}
           />
           <Navbar.Brand href="/">Orginizer</Navbar.Brand>
-          <Navbar.Toggle
-
-          /* aria-controls="responsive-navbar-nav" */
-          />
+          <Navbar.Toggle />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/" eventKey="1">

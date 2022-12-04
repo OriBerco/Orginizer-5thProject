@@ -8,7 +8,7 @@ async function signinUser(req, res) {
   const { email, password } = req.body;
   const credentialsFromDB = await operations.userSignin(email, password);
   if (credentialsFromDB == null)
-    res.status(401).json("Username or password is incorrect");
+    res.status(401).json("Credentials are incorrect");
   else {
     const accessToken = jwt.sign(
       {

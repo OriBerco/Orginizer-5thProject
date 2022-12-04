@@ -1,4 +1,4 @@
-import { useContext, useRef,useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTasks } from "../service/manageTasks";
 import { getUserDetails, loginAuthUser } from "../service/manageUsers";
@@ -9,8 +9,7 @@ import { Button } from "react-bootstrap";
 export default function Login() {
   const { setUser } = useContext(UserContext);
   const { setTasks } = useContext(TasksContext);
-  const[error, setError] = 
-useState('')
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const email = useRef();
   const password = useRef();
@@ -34,19 +33,31 @@ useState('')
   return (
     <div className="centerContent">
       <form id="loginArea" onSubmit={loginUser}>
-        <h2>Login</h2>
+        <h2>Sign in</h2>
         <label htmlFor="email">Email:</label>
         <br />
-        <input type="email" name="email" id="email" ref={email} />
+        <input
+          type="email"
+          name="email"
+          id="email"
+          ref={email}
+          onChange={() => setError("")}
+        />
         <br />
         <label htmlFor="password">Password:</label>
         <br />
-        <input type="password" name="password" id="password" ref={password} />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          ref={password}
+          onChange={() => setError("")}
+        />
         <br />
         <br />
         <div>
           <p className="text-danger">{error}</p>
-          <Button type="submit">Login</Button>
+          <Button type="submit">Signin</Button>
         </div>
       </form>
     </div>

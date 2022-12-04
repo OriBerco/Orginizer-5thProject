@@ -5,7 +5,8 @@ import Cookies from "js-cookie";
 const token = { headers: { Authorization: Cookies.get("jid") } };
 
 export async function getTasks() {
-  if (token)
+  try{
+    if (token)
     return await axios
       .get(url + "task/getall", {
         headers: { Authorization: Cookies.get("jid") },
@@ -13,10 +14,13 @@ export async function getTasks() {
       .then((res) => {
         return res;
       })
-      .catch((error) => console.log(error.response.message));
+  }
+  catch(err){
+   
+  }
 }
 export function completeTask(task) {
-  task.status = true;
+  task.status == false ? (task.status = true) : (task.status = false);
   axios.put(url + "task/update", task, {
     headers: { Authorization: Cookies.get("jid") },
   });
@@ -24,29 +28,32 @@ export function completeTask(task) {
 export function createNewTask(task) {
   if (task.taskName.length > 0) {
     if (task.description == "") {
-      task.description = "no description";
-      axios
+      task.description = "none";
+      return axios
         .post(url + "task/add", task, {
           headers: { Authorization: Cookies.get("jid") },
         })
         .catch((error) => console.log(error.response.data));
     } else {
-      axios
+      return axios
         .post(url + "task/add", task, {
           headers: { Authorization: Cookies.get("jid") },
         })
+
         .catch((error) => console.log(error.response.data));
     }
   }
 }
 export function updateTask(task) {
-  axios.put(url + "task/update", task, {
-    headers: { Authorization: Cookies.get("jid") },
-  });
+  return axios
+    .put(url + "task/update", task, {
+      headers: { Authorization: Cookies.get("jid") },
+    })
+    .catch((error) => console.log(error));
 }
 
 export function deleteTask(id) {
-  axios
+  return axios
     .delete(url + "task/deleteone/", {
       headers: { Authorization: Cookies.get("jid") },
       data: { id: id },
@@ -54,20 +61,19 @@ export function deleteTask(id) {
     .catch((error) => console.log(error));
 }
 export function deleteAllCompleted() {
-  axios
+  return axios
     .delete(url + "task/deleteall/", {
       headers: { Authorization: Cookies.get("jid") },
       data: { status: true },
     })
-    .then((res) => console.log(res))
+
     .catch((error) => console.log(error));
 }
 export function deleteAllOverdue() {
-  axios
+  return axios
     .delete(url + "task/deleteall/", {
       headers: { Authorization: Cookies.get("jid") },
-      data: { endDate: { $lt: new Date() } },
+      data: { endDate: { $lt: new Date() }, status: false },
     })
-    .then((res) => console.log(res))
     .catch((error) => console.log(error));
 }
