@@ -16,7 +16,7 @@ export default function Home() {
             user.name.firstName.slice(1)}
           !
         </h1>
-        <p>Thank you for staying orginized!</p>
+        <p className="homeParagraph">Thank you for staying orginized!</p>
         <hr />
         <div id="homePageLists">
           <div id="homeTopLists">

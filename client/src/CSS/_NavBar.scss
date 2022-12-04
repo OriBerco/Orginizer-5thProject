@@ -12,6 +12,11 @@
   z-index: 2;
   margin-bottom: 50px;
 }
+.navbar button.btn{
+  position: sticky;
+  left: 55px;
+max-width: 70px;
+}
 #logo {
   max-width: 200%;
   min-width: 800px;

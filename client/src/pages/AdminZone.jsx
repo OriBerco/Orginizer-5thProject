@@ -8,10 +8,9 @@ import PageNotFound from "./PageNotFound";
 export default function AdminZone() {
   const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState(null);
-  const [arrowElement, setArrowElement] = useState(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement: "bottom-start",
-    modifiers: [{ name: "arrow", options: { element: arrowElement } }],
+
   });
   const { user } = useContext(UserContext);
 
@@ -51,7 +50,7 @@ export default function AdminZone() {
           <div className="user" onClick={() => changeRole(false)}>
             User
           </div>
-          <div ref={setArrowElement} style={styles.arrow} />
+         
         </div>
       </>
     );

@@ -24,13 +24,9 @@
   font-size: 1.7rem;
   padding: 5px;
   background-color: rgba(93, 118, 107, 0.66);
-}
-#taskList thead tr :nth-child(1) {
   display: none;
 }
-#taskList thead tr :nth-child(4) {
-  display: none;
-}
+
 
 #task td {
   font-size: 0.9em;
@@ -40,9 +36,10 @@
 }
 #task td:nth-child(2) {
   overflow: hidden;
-  max-width: 20vw;
+  font-size: 2rem;
+  font-weight: 600;
 }
-#task td:nth-child(1) {
+#task td:nth-child(1),td:nth-child(5) {
   display: none;
 }
 #task td:nth-child(4) {
@@ -55,6 +52,16 @@
     rgba(0, 0, 0, 0.25) 0px 1em 0.5em,
     rgba(255, 255, 255, 0.1) 0px 0px 0px 5px inset;
   cursor: pointer;
+  margin-bottom: 1px;
+}
+#task tr {
+  background-color: rgba(43, 174, 102, 0.5);
+  box-shadow: rgba(0, 0, 0, 0.524) 0px 0.0625em 0.0625em,
+    rgba(0, 0, 0, 0.25) 0px 1em 0.5em,
+    rgba(255, 255, 255, 0.1) 0px 0px 0px 5px inset;
+  cursor: pointer;
+  height: 65px;
+  letter-spacing: 1px;
 }
 #taskBoxWrapper {
   position: absolute;
@@ -88,6 +95,17 @@
   padding: 5px;
   font-size: 2.5rem;
 }
+#taskListBox button.btn {
+  padding: 0;
+  margin: 25px;
+  font-size: 1.5rem;
+width: 50%;
+}
+#taskListBox .search , select {
+  padding: 0;
+  font-size: 1.5rem;
+width: 60%;
+}
 #listForm {
   width: 70%;
 }
@@ -118,11 +136,11 @@
     font-size: 1.7rem;
     white-space: nowrap;
   }
-  #taskList thead tr :nth-child(1) {
-    display: contents;
+  #taskList thead tr  {
+    display: table-row;
   }
-  #task td:nth-child(1) {
-    display: contents;
+  #task td:nth-child(1),td:nth-child(3),td:nth-child(4),td:nth-child(5) {
+    display: table-cell;
   }
   #taskList thead tr :nth-child(4) {
     display: contents;
@@ -144,7 +162,11 @@
   #taskAdd h2 {
     padding-bottom: 20px;
   }
+  #task tr {
+  background-color: inherit;
+  box-shadow: inherit;
+  cursor: pointer;
+  height: 65px;
+  letter-spacing: 1px;
 }
-@media all and (min-width: 1000px) {
- 
 }

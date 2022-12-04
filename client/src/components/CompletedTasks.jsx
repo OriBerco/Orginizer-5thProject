@@ -66,13 +66,14 @@ export default function CompletedTasks() {
   if (filtered.length < 1) {
     return (
       <>
-        <h3>Active Tasks ({filtered.length})</h3> <p>None</p>
+        <h3 className="homeTitles">Active Tasks ({filtered.length})</h3>{" "}
+        <p>None</p>
       </>
     );
   }
   return (
     <div className="centerContent" ref={setReferenceElement}>
-      <h3>Completed Tasks ({filtered.length})</h3>
+      <h3 className="homeTitles">Completed Tasks ({filtered.length})</h3>
       <div ref={setPopperElement} style={styles.popper} {...attributes.popper}>
         {selectedData}
       </div>

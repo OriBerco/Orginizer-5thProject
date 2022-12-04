@@ -126,9 +126,10 @@ export default function TasksList({ toggleBox }) {
             placeholder="Search"
             onChange={(event) => setSearchData(event.target.value)}
             value={searchData}
+            className="search"
           />
           <br />
-          <Button onClick={() => toggleBox("Add")}>Add Task</Button>
+          <Button onClick={() => toggleBox("Add")}>&#10798; Add Task</Button>
           <div
             ref={setPopperElement}
             style={styles.popper}

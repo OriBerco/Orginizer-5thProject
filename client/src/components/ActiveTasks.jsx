@@ -92,7 +92,8 @@ export default function ActiveTasks() {
   }
   return (
     <div className="centerContent" ref={setReferenceElement}>
-      <h3>Active Tasks ({filtered.length})</h3>
+      <h3 className="homeTitles">Active Tasks ({filtered.length})</h3>
+      <br />
       <input
         type="text"
         placeholder="Search"
@@ -103,7 +104,9 @@ export default function ActiveTasks() {
         <Link to="/lists">
           <Button onClick={() => setListName("")}>All Tasks</Button>
         </Link>
-      </div><br /><br />
+      </div>
+      <br />
+      <br />
     </div>
   );
 }

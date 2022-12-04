@@ -21,6 +21,12 @@
   overflow: hidden;
   max-width: 28vw;
 }
+.homeTitles{
+  font-size: 2rem;
+}
+.homeParagraph{
+  display: none;
+}
 @media all and (min-width: 1000px) {
   #homeList {
     background-color: #38d27d28;
@@ -31,7 +37,9 @@
     margin: 0;
     padding: 0;
   }
-
+.homeParagraph{
+  display: block;
+}
   #homeTopLists {
     display: grid;
     grid-template-columns: 1fr 1fr;

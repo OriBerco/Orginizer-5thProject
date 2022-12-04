@@ -70,13 +70,13 @@ export default function OverdueTasks() {
   if (filtered.length < 1) {
     return (
       <>
-        <h3>Overdue Tasks ({filtered.length})</h3> <p>None</p>
+        <h3 className="homeTitles">Overdue Tasks ({filtered.length})</h3> <p>None</p>
       </>
     );
   }
   return (
     <div className="centerContent" ref={setReferenceElement}>
-      <h3>Overdue Tasks ({filtered.length})</h3>
+      <h3 className="homeTitles">Overdue Tasks ({filtered.length})</h3>
       <div ref={setPopperElement} style={styles.popper} {...attributes.popper}>
         {selectedData}
       </div>
