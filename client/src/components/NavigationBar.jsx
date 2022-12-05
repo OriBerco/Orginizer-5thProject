@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import UserBar from "./UserBar";
 import { Nav, Navbar, Container } from "react-bootstrap";
 
+
 export default function NavigationBar() {
   return (
     <>

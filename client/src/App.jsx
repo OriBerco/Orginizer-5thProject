@@ -1,23 +1,23 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
-import { UserContext } from "./src/components/userContext";
-import { getUserDetails } from "./src/service/manageUsers";
-import { getTasks } from "./src/service/manageTasks";
-import { TasksContext } from "./src/components/TasksContext";
-import { TasksTitleContext } from "./src/components/TasksTitleContext";
-import { ToRenderContext } from "./src/components/ToRenderContext";
-import Home from "./src/pages/Home";
-import About from "./src/pages/About";
-import Login from "./src/pages/Login";
-import Register from "./src/pages/Register";
-import Contact from "./src/pages/Contact";
-import TaskZone from "./src/pages/TaskZone";
-import UserZone from "./src/pages/UserZone";
-import AdminZone from "./src/pages/AdminZone";
-import NavigationBar from "./src/components/NavigationBar";
-import Footer from "./src/components/Footer";
-import PageNotFound from "./src/pages/PageNotFound";
+import { UserContext } from "./components/userContext";
+import { getUserDetails } from "./service/manageUsers";
+import { getTasks } from "./service/manageTasks";
+import { TasksContext } from "./components/TasksContext";
+import { TasksTitleContext } from "./components/TasksTitleContext";
+import { ToRenderContext } from "./components/ToRenderContext";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Contact from "./pages/Contact";
+import TaskZone from "./pages/TaskZone";
+import UserZone from "./pages/UserZone";
+import AdminZone from "./pages/AdminZone";
+import NavigationBar from "./components/NavigationBar";
+import Footer from "./components/Footer";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   const [user, setUser] = useState();
@@ -77,7 +77,11 @@ function App() {
                 <NavigationBar />
                 <div className="content container">
                   <div id="imgBgcDiv">
-                    <img className="bgImg" src="/to-do-list.png" alt="logo" />
+                    <img
+                      className="bgImg"
+                      src="public\to-do-list.png"
+                      alt="logo"
+                    />
                   </div>
                   <Routes>
                     <Route exact path="/" element={<Home />} />
