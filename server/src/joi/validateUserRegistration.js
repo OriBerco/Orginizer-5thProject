@@ -2,12 +2,12 @@ const joi = require("joi");
 
 const schema = joi.object({
   name: {
-    firstName: joi.string().required().messages({
+    firstName: joi.string().required().min(3).max(20).messages({
       "string.base": `First name should be a type of 'text'`,
       "string.empty": `First name cannot be empty`,
       "any.required": `First name is required `,
     }),
-    lastName: joi.string().required().messages({
+    lastName: joi.string().required().min(3).max(20).messages({
       "string.base": `Last name should be a type of 'text'`,
       "string.empty": `Last name cannot be empty`,
       "any.required": `Last name is required `,
@@ -19,12 +19,18 @@ const schema = joi.object({
     "string.email": `Email should be valid`,
     "any.required": `Email is required `,
   }),
-  password: joi.string().required().min(6).alphanum().messages({
-    "string.base": `Password should be a type of 'text'`,
-    "string.empty": `Password cannot be empty`,
-    "string.min": `Password should have a minimum length of {#limit}`,
-    "any.required": `Password is required `,
-  }),
+  password: joi
+    .string()
+    .required()
+    .min(6)
+    .max(30)
+    .alphanum()
+    .messages({
+      "string.base": `Password should be a type of 'text'`,
+      "string.empty": `Password cannot be empty`,
+      "string.min": `Password should have a minimum length of {#limit}`,
+      "any.required": `Password is required `,
+    }),
   isAdmin: joi.boolean(),
 });
 

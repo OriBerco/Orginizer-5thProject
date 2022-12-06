@@ -20,39 +20,57 @@ export default function Register() {
     const emailValue = email.current.value;
     const passwordValue = password.current.value;
 
-    const newUser = {
-      name: {
-        firstName:
-          firstNameValue.charAt(0).toUpperCase() + firstNameValue.slice(1),
-        lastName:
-          lastNameValue.charAt(0).toUpperCase() + lastNameValue.slice(1),
-      },
-      email: emailValue,
-      password: passwordValue,
-      isAdmin: false,
-    };
-    registerUser(newUser, Navigate).catch((err) => {
-      if (err.response.data.includes("Email")) {
-        setEmailError(err.response.data);
-      } else {
-        setEmailError("");
-      }
-      if (err.response.data.includes("Password")) {
-        setPasswordError(err.response.data);
-      } else {
-        setPasswordError("");
-      }
-      if (err.response.data.includes("First")) {
-        setFNameError(err.response.data);
-      } else {
-        setFNameError("");
-      }
-      if (err.response.data.includes("Last")) {
-        setLNameError(err.response.data);
-      } else {
-        setLNameError("");
-      }
-    });
+    if (passwordValue.length > 50) {
+      setPasswordError("Password too long");
+      return null;
+    } else if (passwordValue.search(/\d/) == -1) {
+      setPasswordError("Password needs one number");
+      return null;
+    } else if (passwordValue.search(/[a-zA-Z]/) == -1) {
+      setPasswordError("Password needs one letter");
+      return null;
+    } else if (
+      passwordValue.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) != -1
+    ) {
+      setPasswordError("Password bad_char");
+      return null;
+    } else {
+      setPasswordError("");
+
+      const newUser = {
+        name: {
+          firstName:
+            firstNameValue.charAt(0).toUpperCase() + firstNameValue.slice(1),
+          lastName:
+            lastNameValue.charAt(0).toUpperCase() + lastNameValue.slice(1),
+        },
+        email: emailValue,
+        password: passwordValue,
+        isAdmin: false,
+      };
+      registerUser(newUser, Navigate).catch((err) => {
+        if (err.response.data.includes("Email")) {
+          setEmailError(err.response.data);
+        } else {
+          setEmailError("");
+        }
+        if (err.response.data.includes("Password")) {
+          setPasswordError(err.response.data);
+        } else {
+          setPasswordError("");
+        }
+        if (err.response.data.includes("First")) {
+          setFNameError(err.response.data);
+        } else {
+          setFNameError("");
+        }
+        if (err.response.data.includes("Last")) {
+          setLNameError(err.response.data);
+        } else {
+          setLNameError("");
+        }
+      });
+    }
   }
   return (
     <div className="centerContent">
