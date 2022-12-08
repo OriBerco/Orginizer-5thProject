@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/";
+const url = "https://orginizer-app.herokuapp.com/";
 import axios from "axios";
 import Cookies from "js-cookie";
 

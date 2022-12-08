@@ -93,9 +93,9 @@ export default function ActiveTasks() {
   return (
     <div className="centerContent" ref={setReferenceElement}>
       <h3 className="homeTitles">Active Tasks ({filtered.length})</h3>
-      <br />
+      
       <input
-        type="text"
+        type="search"
         placeholder="Search"
         onChange={(event) => setSearchData(event.target.value)}
       />

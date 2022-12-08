@@ -32,6 +32,6 @@ server.delete("/task/deleteall", authenticateUser, deleteTasks);
 server.get("/task/getall", authenticateUser, getAllUserTasks);
 server.get("/", getAllUsers);
 
-server.listen(process.env.PORT|| 3000, () =>
+server.listen( process.env.PORT || 3000, () =>
   console.log("Express is listening on http://localhost:3000/")
 );
