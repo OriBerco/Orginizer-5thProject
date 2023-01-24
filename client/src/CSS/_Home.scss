@@ -20,6 +20,7 @@
 #homeTask td:nth-child(1) {
   overflow: hidden;
   max-width: 28vw;
+  white-space: nowrap;
 }
 .homeTitles{
   font-size: 2rem;

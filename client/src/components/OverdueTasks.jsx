@@ -35,7 +35,7 @@ export default function OverdueTasks() {
     }
     deleteAllOverdue().then((resp) => {
       resp
-        ? getTasks().then((res) => {
+        ? getTasks().then((res) => {console.log(res)
             setTasks([...res.data]);
           })
         : null;

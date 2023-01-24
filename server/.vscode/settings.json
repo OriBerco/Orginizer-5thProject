@@ -1,8 +1,4 @@
 {
-    "appService.zipIgnorePattern": [
-        "node_modules{,/**}",
-        ".vscode{,/**}"
-    ],
     "appService.defaultWebAppToDeploy": "/subscriptions/2c8e49cc-c68f-4007-ae90-460e45087aff/AppServices/subscriptions/2c8e49cc-c68f-4007-ae90-460e45087aff/resourceGroups/Showcase/providers/Microsoft.Web/sites/Orginizer",
     "appService.deploySubpath": "."
 }
